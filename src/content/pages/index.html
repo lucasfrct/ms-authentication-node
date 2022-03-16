@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+  <head>
+    <base href="/" />
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index Auth</title>
+  </head>
+  <body style="background-color: #0D1117; color: #FFF; font-family:Verdana, Geneva, Tahoma, sans-serif;">
+    <h1 style="text-align:center; margin-top: 60px;">olombongo-ms-auth-node</h1>
+
+    <div class="public" style="word-wrap: break-word;   background-color: rgba(255,255,255,0.1); display: block; width: 70%;; min-height: 200px; margin-top: 60px; margin: auto; color: #FFF; padding: 24px;"><h3>Request</h3></div>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script src="/authenticate/hybrid-crypto-js"></script>
+  <script src="/authenticate/js-sha512"></script>
+  <script src="/authenticate/client"></script>
+  <script>
+    (async()=>{
+      let result;
+      let user = { email: "email@email.com", password: "Alterar123" };
+      
+      const auth = new AuthenticationClient();
+      
+      // TESTE SIGN
+      result = await auth.sign("http://localhost:5001/sign", user.email, user.password);
+      console.log("SIGN", result);
+      $(".public").html("<h3>Sign</h3>"+JSON.stringify(result));
+      setTimeout(async() =>{ console.log("LOGOUT RESULT: ", await auth.logout()); }, 1000);
+
+      //TEST LOGIN
+      setTimeout(async() =>{ 
+        result = await auth.login("http://localhost:5001/login", user.email, user.password);
+        console.log("LOGOUT RESULT: ", await auth.logout()); 
+        $(".public").html("<h3>Login</h3>"+JSON.stringify(result));
+        setTimeout(async() =>{ console.log("LOGOUT RESULT: ", await auth.logout()); }, 3000);
+      }, 2000);
+
+    })();
+    
+  </script>
+</html>

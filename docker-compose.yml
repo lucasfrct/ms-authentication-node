@@ -1,0 +1,44 @@
+# olombongo-ms-auth-node
+version: '3.9'
+
+services:
+
+  olombongo-ms-database:
+    network_mode: "bridge"
+    extends:
+      file: ../olombongo-ms-database/docker-compose.yml
+      service: olombongo-ms-database # localhost:3307
+  
+  olombongo-ms-database-admin:
+    network_mode: "bridge"
+    extends:
+      file: ../olombongo-ms-database/docker-compose.yml
+      service: olombongo-database-admin # localhost:3308
+
+#   olombongo-ms-auth-node:
+#     build: .
+#     container_name: olombongo-ms-auth-node
+#     network_mode: "bridge"
+#     # command: npm run create
+#     # entrypoint: npm run create
+#     environment:
+#       NODE_ENV: "development"
+#       SECRET_KEY:
+#       PUBLIC_KEY:      
+#       PRIVATE_KEY:
+#     ports:
+#       - 5001:5001 # host:container
+#     volumes:
+#       - type: bind
+#         source: .
+#         target: /home/olombongo/olombongo-ms-auth-node
+#       - type: bind
+#         source: ../olombongo-ms-database
+#         target: /home/olombongo/olombongo-ms-database
+#       - type: bind
+#         source: ../olombongo-ms-utils-node
+#         target: /home/olombongo/olombongo-ms-utils-node
+
+volumes:
+  olombongo-ms-auth-node:
+  mysql:
